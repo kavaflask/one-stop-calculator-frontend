@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>One-Stop Calculator MVP</title>
+
+  <!-- Pixel / Minecraft-like font -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Press Start 2P', cursive;
+      background-color: #3c3f41; /* Minecraft stone-like color */
+      color: #fff;
+      text-align: center;
+      padding-top: 100px;
+      background-image: url("https://i.imgur.com/NL2fV7F.png"); /* pixel dirt texture */
+      image-rendering: pixelated;
+      background-size: 64px;
+    }
+
+    h1 {
+      font-size: 32px;
+      text-shadow: 4px 4px #000;
+      margin-bottom: 20px;
+    }
+
+    #construction {
+      font-size: 20px;
+      margin-top: 10px;
+      margin-bottom: 30px;
+      color: #ffeb3b;
+      text-shadow: 2px 2px #000;
+    }
+
+    #timer {
+      font-size: 18px;
+      color: #00ff00;
+      text-shadow: 2px 2px #000;
+    }
+
+    .container {
+      background: rgba(0, 0, 0, 0.5);
+      border: 4px solid #5b4636;
+      padding: 40px;
+      display: inline-block;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>🟫 One-Stop Calculator 🟩</h1>
+    <div id="construction">🚧 UNDER CONSTRUCTION 🚧</div>
+    <div id="timer">Loading countdown...</div>
+  </div>
+
+<script>
+  // Countdown: exactly 7 days from right now
+  const launchDate = new Date("2025-11-28T00:00:00");
+
+
+  function updateTimer() {
+    const now = new Date();
+    const diff = launchDate - now;
+
+    if (diff <= 0) {
+      document.getElementById("timer").innerText = "We are LIVE!";
+      return;
+    }
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    document.getElementById("timer").innerHTML =
+      `We will be live in &lt; ${days}d ${hours}h ${minutes}m ${seconds}s &gt;`;
+  }
+
+  function logVisit() {
+    fetch("http://localhost:8080/api/log-visit")
+      .then(res => res.json())
+      .then(data => console.log("Visit logged:", data))
+      .catch(err => console.error("Error logging visit:", err));
+  }
+
+  logVisit();
+  updateTimer();
+  setInterval(updateTimer, 1000);
+</script>
+
+
+
+
+</body>
+</html>
